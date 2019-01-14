@@ -1,2 +1,14 @@
 language: shell
 
+git:
+  depth: 2
+
+script: ./script.sh
+
+# For skip build pass commit with [skip <KEYWORD>] <KEYWORD> is ci or travis or travis ci or travis-ci or travisci
+#[skip <KEYWORD>]
+
+#before_script:
+  #- git checkout Older
+  
+
