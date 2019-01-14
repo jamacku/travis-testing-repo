@@ -1,1 +1,1 @@
-shellcheck ../script.sh
+shellcheck $PWD/script.sh
