@@ -6,6 +6,10 @@ REV=($(git log --name-only --oneline --max-count=2 | awk '{ print $1 }' | awk '/
 echo "Building from revisions:"
 echo "${REV[@]}"
 
+FIL=($(git log --name-only --oneline --max-count=1 | awk '{ print $1 }' | awk '/[^'${REV[0]}']/ { print }'))
+
+# Check for shell script files
+
 # get paths to changed shell files
 # git log --name-only --oneline --max-count=2
 # git log --name-only --oneline --max-count=2 | awk '/[0-9a-f]{7} / { print $1 }' 
