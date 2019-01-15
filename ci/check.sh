@@ -9,6 +9,8 @@ echo "${REV[@]}"
 # Maybe better would be just take all rows instead of first one
 FIL=($(git log --name-only --oneline --max-count=1 | awk '{ print $1 }' | awk '/[^'${REV[0]}']/ { print }'))
 
+echo "${FIL[@]}"
+
 # Check for shell script files
 
 # get paths to changed shell files
