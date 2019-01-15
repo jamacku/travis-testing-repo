@@ -8,7 +8,5 @@ script: ./ci/check.sh
 # For skip build pass commit with [skip <KEYWORD>] <KEYWORD> is ci or travis or travis ci or travis-ci or travisci
 #[skip <KEYWORD>]
 
-#before_script:
-  #- git checkout Older
-  
-
+before_script:
+  - sudo apt-get install csdiff
