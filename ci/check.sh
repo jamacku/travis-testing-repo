@@ -3,6 +3,7 @@ while read -r DATA; do
 done < <(git rev-list --all --max-count=2)
 
 # get paths to changed shell files
+# git log --name-only --oneline --max-count=2
 
 #Check for New commit
 shellcheck "$PWD"/script.sh
