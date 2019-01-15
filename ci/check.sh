@@ -6,6 +6,7 @@ REV=($(git log --name-only --oneline --max-count=2 | awk '{ print $1 }' | awk '/
 echo "Building from revisions:"
 echo "${REV[@]}"
 
+# Maybe better would be just take all rows instead of first one
 FIL=($(git log --name-only --oneline --max-count=1 | awk '{ print $1 }' | awk '/[^'${REV[0]}']/ { print }'))
 
 # Check for shell script files
