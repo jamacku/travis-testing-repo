@@ -1,8 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 REV=($(git log --name-only --oneline --max-count=2 | awk '{ print $1 }' | awk '/[0-9a-f]{7}/ { print }'))
 
 # Revisions are in this order [New, Old]
+echo "Building from revisions:"
 echo "${REV[@]}"
 
 # get paths to changed shell files
