@@ -9,4 +9,5 @@ script: ./ci/check.sh
 #[skip <KEYWORD>]
 
 before_script:
-  - sudo apt-get install csdiff
+  - sudo apt-get update
+  - git clone https://github.com/kdudka/csdiff.git && cd csdiff/ && make && make check && make install
