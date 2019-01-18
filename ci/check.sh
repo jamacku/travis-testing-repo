@@ -43,6 +43,7 @@ echo "------------"
 # https://github.com/kdudka/csmock/blob/master/scripts/run-shellcheck.sh#L10
 # xargs -r shellcheck --format=gcc "${shflist[@]}"
 shellcheck --format=gcc "${shflist[@]}" > "$PWD"/new.err
+cat "$PWD"/new.err
 #done
 
 #if [ $? -eq 0 ]; then
@@ -82,6 +83,7 @@ echo "------------"
 # https://github.com/kdudka/csmock/blob/master/scripts/run-shellcheck.sh#L10
 # xargs -r shellcheck --format=gcc "${oldshflist[@]}"
 shellcheck --format=gcc "${oldshflist[@]}" > "$PWD"/old.err
+cat "$PWD"/old.err
 #done
 
 #if [ $? -eq 0 ]; then

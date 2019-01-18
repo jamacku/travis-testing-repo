@@ -3,12 +3,16 @@ language: shell
 git:
   depth: 2
 
+## Source - 01: https://github.com/kdudka/csdiff/blob/master/.travis.yml  
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install apt-transport-https
+  - echo "deb https://kdudka.fedorapeople.org/csbuild trusty contrib" | sudo tee -a /etc/apt/sources.list
+  - sudo apt-get update
+
+install:
+  - sudo apt-get install cmake help2man libboost-dev libboost-program-options-dev libboost-python-dev libboost-regex-dev
+  - sudo apt-get install -y --force-yes csbuild
+## End - 01
+
 script: ./ci/check.sh
-
-# For skip build pass commit with [skip <KEYWORD>] <KEYWORD> is ci or travis or travis ci or travis-ci or travisci
-#[skip <KEYWORD>]
-
-#comment
-#before_script:
-  #- sudo apt-get update
-  #- git clone https://github.com/kdudka/csdiff.git && cd csdiff/ && make && make check && make install
