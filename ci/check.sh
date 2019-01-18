@@ -12,12 +12,17 @@ echo "------------"
 # Maybe better would be just take all rows instead of first one
 flist=($(git log --name-only --oneline --max-count=1 | awk '{ print $1 }' | awk '/[^'${rlist[0]}']/ { print }'))
 echo "List of changed files since last revision: "
-printf '%s\n' "${flist[@]}"
+printf "%s\n" "${flist[@]}"
 echo "------------"
 
 #------------#
 #    NEW     #
 #------------#
+
+printf "\n\n"
+echo "---------------------"
+echo "Checking NEW REVISION"
+echo "---------------------"
 
 # Check for shell script files
 echo "List of shell files based on .script-list.txt: "
@@ -29,7 +34,7 @@ for file in "${flist[@]}"; do
   grep -Fxq "$file" .script-list.txt && shflist+=("$file")
 done
 
-echo "List of shell files: "
+echo "List of shell files to check: "
 printf '%s\n' "${shflist[@]}"
 echo "------------"
 
@@ -47,11 +52,31 @@ done
 #    OLD     #
 #------------#
 
-#Check for prev commit
-git checkout ${rlist[1]}
-shellcheck "$PWD"/script.sh
+printf "\n\n"
+echo "-----------------------"
+echo "Checking OLDER REVISION"
+echo "-----------------------"
 
-exit $nexit
+#Checkout second newest revision
+git checkout ${rlist[1]}
+
+# Check for shell script files
+echo "List of shell files based on .script-list.txt: "
+cat "$PWD"/.script-list.txt
+echo "------------"
+
+oldshflist=()
+for file in "${shflist[@]}"; do
+  grep -Fxq "$file" .script-list.txt && oldshflist+=("$file")
+done
+
+echo "List of shell files to check: "
+printf '%s\n' "${shflist[@]}"
+echo "------------"
+
+for file in "${shflist[@]}"; do
+  shellcheck "$PWD"/"$file"
+done
 
 #if [ $? -eq 0 ]; then
 #  echo "OLD BUILD is OK!"
