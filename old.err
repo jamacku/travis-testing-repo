@@ -1,0 +1,4 @@
+ci/check.sh:4:8: warning: Prefer mapfile or read -a to split command output (or quote to avoid splitting). [SC2207]
+ci/check.sh:13:8: warning: Prefer mapfile or read -a to split command output (or quote to avoid splitting). [SC2207]
+ci/check.sh:13:86: note: Double quote to prevent globbing and word splitting. [SC2086]
+ci/check.sh:65:14: note: Double quote to prevent globbing and word splitting. [SC2086]
