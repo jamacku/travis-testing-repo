@@ -34,7 +34,7 @@ printf '%s\n' "${shflist[@]}"
 echo "------------"
 
 for file in "${shflist[@]}"; do
-  shellcheck "$PWD""$file"
+  shellcheck "$PWD"/"$file"
 done
 
 #if [ $? -eq 0 ]; then
