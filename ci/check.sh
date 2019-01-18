@@ -46,12 +46,6 @@ shellcheck --format=gcc "${shflist[@]}" > "$PWD"/new.err
 cat "$PWD"/new.err
 #done
 
-#if [ $? -eq 0 ]; then
-#  echo "NEW BUILD is OK!"
-#else
-#  echo "NEW BUILD is WRONG!"
-#fi
-
 #------------#
 #    OLD     #
 #------------#
@@ -86,12 +80,6 @@ shellcheck --format=gcc "${oldshflist[@]}" > "$PWD"/old.err
 cat "$PWD"/old.err
 #done
 
-#if [ $? -eq 0 ]; then
-#  echo "OLD BUILD is OK!"
-#else
-#  echo "OLD BUILD is WRONG!"
-#fi
-
 #------------#
 #    OLD     #
 #------------#
@@ -119,11 +107,11 @@ if wc -l < "$PWD"/bugs.diff -ne 0; then
   echo "Added bugs since last version:" 
   csgrep "$PWD"/bugs.diff
   echo "------------"
-  $exitstatus=1
+  "$exitstatus"=1
 else
   echo "No changes since last version!" 
   echo "------------"
-  $exitstatus=0
+  "$exitstatus"=0
 fi
 
 #Pass final exit status for build
