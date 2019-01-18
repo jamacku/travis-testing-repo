@@ -39,9 +39,9 @@ echo "List of shell files to check: "
 printf '%s\n' "${shflist[@]}"
 echo "------------"
 
-for file in "${shflist[@]}"; do
-  shellcheck --format=gcc "$PWD"/"$file"
-done
+#for file in "${shflist[@]}"; do
+xargs -r shellcheck --format=gcc "${shflist[@]}"
+#done
 
 #if [ $? -eq 0 ]; then
 #  echo "NEW BUILD is OK!"
@@ -73,12 +73,12 @@ for file in "${shflist[@]}"; do
 done
 
 echo "List of shell files to check: "
-printf '%s\n' "${shflist[@]}"
+printf '%s\n' "${oldshflist[@]}"
 echo "------------"
 
-for file in "${shflist[@]}"; do
-  shellcheck --format=gcc "$PWD"/"$file"
-done
+#for file in "${shflist[@]}"; do
+xargs -r shellcheck --format=gcc "${oldshflist[@]}"
+#done
 
 #if [ $? -eq 0 ]; then
 #  echo "OLD BUILD is OK!"
