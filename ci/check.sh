@@ -40,7 +40,9 @@ printf '%s\n' "${shflist[@]}"
 echo "------------"
 
 #for file in "${shflist[@]}"; do
-xargs -r shellcheck --format=gcc "${shflist[@]}"
+# https://github.com/kdudka/csmock/blob/master/scripts/run-shellcheck.sh#L10
+# xargs -r shellcheck --format=gcc "${shflist[@]}"
+shellcheck --format=gcc "${shflist[@]}"
 #done
 
 #if [ $? -eq 0 ]; then
@@ -77,7 +79,9 @@ printf '%s\n' "${oldshflist[@]}"
 echo "------------"
 
 #for file in "${shflist[@]}"; do
-xargs -r shellcheck --format=gcc "${oldshflist[@]}"
+# https://github.com/kdudka/csmock/blob/master/scripts/run-shellcheck.sh#L10
+# xargs -r shellcheck --format=gcc "${oldshflist[@]}"
+shellcheck --format=gcc "${oldshflist[@]}"
 #done
 
 #if [ $? -eq 0 ]; then
