@@ -23,6 +23,7 @@ printf "\n\n"
 echo "---------------------"
 echo "Checking NEW REVISION"
 echo "---------------------"
+printf "\n"
 
 # Check for shell script files
 echo "List of shell files based on .script-list.txt: "
@@ -39,7 +40,7 @@ printf '%s\n' "${shflist[@]}"
 echo "------------"
 
 for file in "${shflist[@]}"; do
-  shellcheck "$PWD"/"$file"
+  shellcheck --format=gcc "$PWD"/"$file"
 done
 
 #if [ $? -eq 0 ]; then
@@ -56,6 +57,7 @@ printf "\n\n"
 echo "-----------------------"
 echo "Checking OLDER REVISION"
 echo "-----------------------"
+printf "\n"
 
 #Checkout second newest revision
 git checkout ${rlist[1]}
@@ -75,7 +77,7 @@ printf '%s\n' "${shflist[@]}"
 echo "------------"
 
 for file in "${shflist[@]}"; do
-  shellcheck "$PWD"/"$file"
+  shellcheck --format=gcc "$PWD"/"$file"
 done
 
 #if [ $? -eq 0 ]; then
