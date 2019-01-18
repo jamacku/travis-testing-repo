@@ -25,6 +25,7 @@ echo "${FIL[@]}"
 #------------#
 
 shellcheck "$PWD"/script.sh
+NE="$?"
 
 #if [ $? -eq 0 ]; then
 #  echo "NEW BUILD is OK!"
@@ -35,6 +36,8 @@ shellcheck "$PWD"/script.sh
 #Check for prev commit
 git checkout ${REV[1]}
 shellcheck "$PWD"/script.sh
+
+exit $NE
 
 #if [ $? -eq 0 ]; then
 #  echo "OLD BUILD is OK!"
