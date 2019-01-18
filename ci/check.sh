@@ -42,7 +42,7 @@ echo "------------"
 #for file in "${shflist[@]}"; do
 # https://github.com/kdudka/csmock/blob/master/scripts/run-shellcheck.sh#L10
 # xargs -r shellcheck --format=gcc "${shflist[@]}"
-shellcheck --format=gcc "${shflist[@]}"
+shellcheck --format=gcc "${shflist[@]}" > "$PWD"/new.err
 #done
 
 #if [ $? -eq 0 ]; then
@@ -81,7 +81,7 @@ echo "------------"
 #for file in "${shflist[@]}"; do
 # https://github.com/kdudka/csmock/blob/master/scripts/run-shellcheck.sh#L10
 # xargs -r shellcheck --format=gcc "${oldshflist[@]}"
-shellcheck --format=gcc "${oldshflist[@]}"
+shellcheck --format=gcc "${oldshflist[@]}" > "$PWD"/old.err
 #done
 
 #if [ $? -eq 0 ]; then
@@ -89,6 +89,18 @@ shellcheck --format=gcc "${oldshflist[@]}"
 #else
 #  echo "OLD BUILD is WRONG!"
 #fi
+
+#------------#
+#    OLD     #
+#------------#
+
+printf "\n\n"
+echo "---------------------"
+echo "Comparing ERROR FILES"
+echo "---------------------"
+printf "\n"
+
+csdiff --fixed old.err new.err
 
 #Pass final exit status for build
 #exit 
