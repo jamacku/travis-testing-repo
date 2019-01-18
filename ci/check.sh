@@ -1,31 +1,36 @@
 #!/bin/bash
 
 # Get number of newest and second newest revision
-REV=($(git log --name-only --oneline --max-count=2 | awk '{ print $1 }' | awk '/[0-9a-f]{7}/ { print }'))
+rlist=($(git log --name-only --oneline --max-count=2 | awk '{ print $1 }' | awk '/[0-9a-f]{7}/ { print }'))
 
 # Revisions are in this order [New, Old]
 echo "Building from revisions:"
-echo "${REV[@]}"
+echo "Old revision: ${rlist[1]}"
+echo "New revision: ${rlist[0]}"
 
 # Maybe better would be just take all rows instead of first one
-FIL=($(git log --name-only --oneline --max-count=1 | awk '{ print $1 }' | awk '/[^'${REV[0]}']/ { print }'))
-
-echo "${FIL[@]}"
+flist=($(git log --name-only --oneline --max-count=1 | awk '{ print $1 }' | awk '/[^'${rlist[0]}']/ { print }'))
+echo "List of changed files since last revision: "
+printf '%s\n' "${flist[@]}"
 
 # Check for shell script files
+cat "$PWD"/.script-list.txt
 
-# get paths to changed shell files
-# git log --name-only --oneline --max-count=2
-# git log --name-only --oneline --max-count=2 | awk '/[0-9a-f]{7} / { print $1 }' 
-# git log --name-only --oneline --max-count=2 | awk '/[0-9a-f]{7} / { print $1 } /sh/ { print $1 }'
-# git log --name-only --oneline --max-count=2 | awk '{ print $1 }' | awk '/[0-9a-f]{7}/ { print } /sh/ { print }'
+shflist=()
+for file in "${flist[@]}"
+do
+  grep -Fxq "$file" .script-list.txt && shflist+=("$file")
+done
+
+echo "List of shell files: "
+printf '%s\n' "${shflist[@]}"
 
 #------------#
 # ShellCheck #        
 #------------#
 
 shellcheck "$PWD"/script.sh
-NE="$?"
+nexit="$?"
 
 #if [ $? -eq 0 ]; then
 #  echo "NEW BUILD is OK!"
@@ -34,10 +39,10 @@ NE="$?"
 #fi
 
 #Check for prev commit
-git checkout ${REV[1]}
+git checkout ${rlist[1]}
 shellcheck "$PWD"/script.sh
 
-exit $NE
+exit $nexit
 
 #if [ $? -eq 0 ]; then
 #  echo "OLD BUILD is OK!"

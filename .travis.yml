@@ -8,6 +8,7 @@ script: ./ci/check.sh
 # For skip build pass commit with [skip <KEYWORD>] <KEYWORD> is ci or travis or travis ci or travis-ci or travisci
 #[skip <KEYWORD>]
 
+#comment
 #before_script:
   #- sudo apt-get update
   #- git clone https://github.com/kdudka/csdiff.git && cd csdiff/ && make && make check && make install
