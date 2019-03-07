@@ -42,8 +42,8 @@ echo "------------"
 #for file in "${shflist[@]}"; do
 # https://github.com/kdudka/csmock/blob/master/scripts/run-shellcheck.sh#L10
 # xargs -r shellcheck --format=gcc "${shflist[@]}"
-shellcheck --format=gcc "${shflist[@]}" > "$PWD"/new.err
-cat "$PWD"/new.err
+shellcheck --format=gcc "${shflist[@]}" > "$PWD"/../new.err
+cat "$PWD"/../new.err
 #done
 
 #------------#
@@ -76,8 +76,8 @@ echo "------------"
 #for file in "${shflist[@]}"; do
 # https://github.com/kdudka/csmock/blob/master/scripts/run-shellcheck.sh#L10
 # xargs -r shellcheck --format=gcc "${oldshflist[@]}"
-shellcheck --format=gcc "${oldshflist[@]}" > "$PWD"/old.err
-cat "$PWD"/old.err
+shellcheck --format=gcc "${oldshflist[@]}" > "$PWD"/../old.err
+cat "$PWD"/../old.err
 #done
 
 #------------#
@@ -92,20 +92,20 @@ printf "\n"
 
 exitstatus=0
 
-csdiff --fixed old.err new.err > "$PWD"/fixes.err
-if wc -l < "$PWD"/fixes.diff -ne 0; then
+csdiff --fixed ../old.err ../new.err > "$PWD"/../fixes.err
+if wc -l < "$PWD"/../fixes.diff -ne 0; then
   echo "Fixed bugs since last version:" 
-  csgrep "$PWD"/fixes.diff
+  csgrep "$PWD"/../fixes.diff
   echo "------------"
 else
   echo "No Fixes since last version!"
   echo "------------"
 fi
 
-csdiff old.err new.err > "$PWD"/bugs.err
-if wc -l < "$PWD"/bugs.diff -ne 0; then
+csdiff ../old.err ../new.err > "$PWD"/../bugs.err
+if wc -l < "$PWD"/../bugs.diff -ne 0; then
   echo "Added bugs since last version:" 
-  csgrep "$PWD"/bugs.diff
+  csgrep "$PWD"/../bugs.diff
   echo "------------"
   "$exitstatus"=1
 else
