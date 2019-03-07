@@ -56,6 +56,9 @@ echo "Checking OLDER REVISION"
 echo "-----------------------"
 printf "\n"
 
+printf "tree:\n"
+tree /home/
+
 #Checkout second newest revision
 git checkout ${rlist[1]}
 
