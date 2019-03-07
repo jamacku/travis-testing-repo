@@ -96,7 +96,7 @@ tree /home/
 exitstatus=0
 
 csdiff --fixed ../old.err ../new.err > "$PWD"/../fixes.err
-if wc -l < "$PWD"/../fixes.err -ne 0; then
+if [ $(wc -l "$PWD"/../fixes.err) -ne 0 ]; then
   echo "Fixed bugs since last version:" 
   csgrep "$PWD"/../fixes.err
   echo "------------"
@@ -106,7 +106,7 @@ else
 fi
 
 csdiff ../old.err ../new.err > "$PWD"/../bugs.err
-if wc -l < "$PWD"/../bugs.err -ne 0; then
+if [ $(wc -l "$PWD"/../bugs.err) -ne 0 ]; then
   echo "Added bugs since last version:" 
   csgrep "$PWD"/../bugs.err
   echo "------------"
