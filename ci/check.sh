@@ -97,8 +97,8 @@ exitstatus=0
 
 set -x
 
-csdiff --fixed ../old.err ../new.err > "$PWD"/../fixes.err
-if [ $(wc -l "$PWD"/../fixes.err) -ne 0 ]; then
+csdiff --fixed "$PWD"/../old.err "$PWD"/../new.err > "$PWD"/../fixes.err
+if [ "$(wc -l "$PWD"/../fixes.err)" -ne 0 ]; then
   echo "Fixed bugs since last version:" 
   csgrep "$PWD"/../fixes.err
   echo "------------"
@@ -107,8 +107,8 @@ else
   echo "------------"
 fi
 
-csdiff ../old.err ../new.err > "$PWD"/../bugs.err
-if [ $(wc -l "$PWD"/../bugs.err) -ne 0 ]; then
+csdiff "$PWD"/../old.err "$PWD"/../new.err > "$PWD"/../bugs.err
+if [ "$(wc -l "$PWD"/../bugs.err)" -ne 0 ]; then
   echo "Added bugs since last version:" 
   csgrep "$PWD"/../bugs.err
   echo "------------"
