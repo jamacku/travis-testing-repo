@@ -57,7 +57,7 @@ echo "-----------------------"
 printf "\n"
 
 #Checkout second newest revision
-git checkout ${rlist[1]}
+git checkout "${rlist[1]}"
 
 # Check for shell script files
 echo "List of shell files based on .script-list.txt: "
@@ -98,7 +98,7 @@ exitstatus=0
 set -x
 
 csdiff --fixed "$PWD"/../old.err "$PWD"/../new.err > "$PWD"/../fixes.err
-if [ "$(wc -l "$PWD"/../fixes.err)" -ne 0 ]; then
+if [ "$(cat "$PWD"/../fixes.err | wc -l)" -ne 0 ]; then
   echo "Fixed bugs since last version:" 
   csgrep "$PWD"/../fixes.err
   echo "------------"
@@ -108,7 +108,7 @@ else
 fi
 
 csdiff "$PWD"/../old.err "$PWD"/../new.err > "$PWD"/../bugs.err
-if [ "$(wc -l "$PWD"/../bugs.err)" -ne 0 ]; then
+if [ "$(cat "$PWD"/../bugs.err | wc -l)" -ne 0 ]; then
   echo "Added bugs since last version:" 
   csgrep "$PWD"/../bugs.err
   echo "------------"
