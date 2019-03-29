@@ -95,8 +95,6 @@ tree /home/
 
 exitstatus=0
 
-set -x
-
 csdiff --fixed "$PWD"/../old.err "$PWD"/../new.err > "$PWD"/../fixes.err
 if [ "$(cat "$PWD"/../fixes.err | wc -l)" -ne 0 ]; then
   echo "Fixed bugs since last version:" 
