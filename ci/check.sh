@@ -90,9 +90,6 @@ echo "Comparing ERROR FILES"
 echo "---------------------"
 printf "\n"
 
-printf "tree:\n"
-tree /home/
-
 exitstatus=0
 
 csdiff --fixed "$PWD"/../old.err "$PWD"/../new.err > "$PWD"/../fixes.err
@@ -110,11 +107,11 @@ if [ "$(cat "$PWD"/../bugs.err | wc -l)" -ne 0 ]; then
   echo "Added bugs since last version:" 
   csgrep "$PWD"/../bugs.err
   echo "------------"
-  "$exitstatus"=1
+  exitstatus=1
 else
   echo "No changes since last version!" 
   echo "------------"
-  "$exitstatus"=0
+  exitstatus=0
 fi
 
 #Pass final exit status for build
