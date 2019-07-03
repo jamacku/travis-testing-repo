@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "changed files only:"
+git diff --name-only HEAD...$TRAVIS_BRANCH
+echo "------------"
+
 # Get number of newest and second newest revision
 rlist=($(git log --name-only --oneline --max-count=2 | awk '{ print $1 }' | awk '/[0-9a-f]{7}/ { print }'))
 
