@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "changed files only:"
-git diff --name-only HEAD...$TRAVIS_BRANCH
+git diff --name-only HEAD...master
 echo "------------"
 
 # Get number of newest and second newest revision
