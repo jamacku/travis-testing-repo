@@ -4,12 +4,16 @@
 #    NEW     #
 #------------#
 
-curl --silent https://patch-diff.githubusercontent.com/raw/jamacku/travis-testing-repo/pull/$TRAVIS_PULL_REQUEST.diff > diffile 
+echo "get diff"
+curl  https://patch-diff.githubusercontent.com/raw/jamacku/travis-testing-repo/pull/$TRAVIS_PULL_REQUEST.diff > diffile 
+echo "read array"
 readarray flist < "$PWD"/.script-list.txt
+echo "array ${flist[@]}"
 shflist=()
 for file in "${flist[@]}"; do
   cat "$PWD"/diffile | grep --silent file && shflist+=("$file")
 done
+echo "changed files ${shflist[@]}"
 
 shellcheck --format=gcc "${shflist[@]}" > "$PWD"/../new.err
 cat "$PWD"/../new.err
@@ -28,12 +32,6 @@ cat "$PWD"/../old.err
 #------------#
 # VALIDATION #
 #------------#
-
-printf "\n\n"
-echo "---------------------"
-echo "Comparing ERROR FILES"
-echo "---------------------"
-printf "\n"
 
 exitstatus=0
 
@@ -59,5 +57,4 @@ else
   exitstatus=0
 fi
 
-#Pass final exit status for build
 exit $exitstatus 
