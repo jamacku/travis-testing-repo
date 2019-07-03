@@ -15,4 +15,4 @@ install:
   - sudo apt-get install -y --force-yes csbuild
 ## End - 01
 
-script: [[ $TRAVIS_PULL_REQUEST != "false" ]] && ./ci/check.sh
+script: echo $TRAVIS_PULL_REQUEST && ./ci/check.sh
