@@ -1,51 +1,20 @@
 #!/bin/bash
 
-echo "changed files only:"
-git diff --name-only HEAD...$TRAVIS_BRANCH
-echo "------------"
-
-# Get number of newest and second newest revision
-rlist=($(git log --name-only --oneline --max-count=2 | awk '{ print $1 }' | awk '/[0-9a-f]{7}/ { print }'))
-
-# Revisions are in this order [New, Old]
-echo "Building from revisions:"
-echo "Old revision: ${rlist[1]}"
-echo "New revision: ${rlist[0]}"
-echo "------------"
-
-# Maybe better would be just take all rows instead of first one
-flist=($(git log --name-only --oneline --max-count=1 | awk '{ print $1 }' | awk '/[^'${rlist[0]}']/ { print }'))
-echo "List of changed files since last revision: "
-printf "%s\n" "${flist[@]}"
-echo "------------"
-
 #------------#
 #    NEW     #
 #------------#
 
-printf "\n\n"
-echo "---------------------"
-echo "Checking NEW REVISION"
-echo "---------------------"
-printf "\n"
-
-# Check for shell script files
-echo "List of shell files based on .script-list.txt: "
-cat "$PWD"/.script-list.txt
-echo "------------"
-
+echo "get diff"
+curl  https://patch-diff.githubusercontent.com/raw/jamacku/travis-testing-repo/pull/$TRAVIS_PULL_REQUEST.diff > diffile 
+echo "read array"
+readarray flist < "$PWD"/.script-list.txt
+echo "array ${flist[@]}"
 shflist=()
 for file in "${flist[@]}"; do
-  grep -Fxq "$file" .script-list.txt && shflist+=("$file")
+  cat "$PWD"/diffile | grep --silent file && shflist+=("$file")
 done
+echo "changed files ${shflist[@]}"
 
-echo "List of shell files to check: "
-printf '%s\n' "${shflist[@]}"
-echo "------------"
-
-#for file in "${shflist[@]}"; do
-# https://github.com/kdudka/csmock/blob/master/scripts/run-shellcheck.sh#L10
-# xargs -r shellcheck --format=gcc "${shflist[@]}"
 shellcheck --format=gcc "${shflist[@]}" > "$PWD"/../new.err
 cat "$PWD"/../new.err
 #done
@@ -54,45 +23,15 @@ cat "$PWD"/../new.err
 #    OLD     #
 #------------#
 
-printf "\n\n"
-echo "-----------------------"
-echo "Checking OLDER REVISION"
-echo "-----------------------"
-printf "\n"
+git checkout "$TRAVIS_BRANCH"
 
-#Checkout second newest revision
-git checkout "${rlist[1]}"
-
-# Check for shell script files
-echo "List of shell files based on .script-list.txt: "
-cat "$PWD"/.script-list.txt
-echo "------------"
-
-oldshflist=()
-for file in "${shflist[@]}"; do
-  grep -Fxq "$file" .script-list.txt && oldshflist+=("$file")
-done
-
-echo "List of shell files to check: "
-printf '%s\n' "${oldshflist[@]}"
-echo "------------"
-
-#for file in "${shflist[@]}"; do
-# https://github.com/kdudka/csmock/blob/master/scripts/run-shellcheck.sh#L10
-# xargs -r shellcheck --format=gcc "${oldshflist[@]}"
-shellcheck --format=gcc "${oldshflist[@]}" > "$PWD"/../old.err
+shellcheck --format=gcc "${shflist[@]}" > "$PWD"/../old.err
 cat "$PWD"/../old.err
 #done
 
 #------------#
-#    OLD     #
+# VALIDATION #
 #------------#
-
-printf "\n\n"
-echo "---------------------"
-echo "Comparing ERROR FILES"
-echo "---------------------"
-printf "\n"
 
 exitstatus=0
 
@@ -118,5 +57,4 @@ else
   exitstatus=0
 fi
 
-#Pass final exit status for build
 exit $exitstatus 
