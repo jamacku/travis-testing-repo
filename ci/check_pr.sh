@@ -10,6 +10,9 @@ git diff origin/"$TRAVIS_BRANCH"
 # get names of files from PR (excluding deleted files)
 git diff --name-only --diff-filter=AM HEAD..."$TRAVIS_BRANCH" > ../pr-changes.txt
 
+echo "PR changes:"
+cat ../pr-changes.txt
+
 # Find modified shell scripts
 readarray list_of_changes < ../pr-changes.txt
 list_of_changed_scripts=()
