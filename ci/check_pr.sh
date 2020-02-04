@@ -13,7 +13,7 @@ cat ../pr-changes.txt
 readarray list_of_changes < ../pr-changes.txt
 list_of_changed_scripts=()
 for file in "${list_of_changes[@]}"; do
-  is_it_script "$file" && list_of_changed_scripts+=("$file")
+  is_it_script "$file" && list_of_changed_scripts+=("./$file")
 done
 
 echo "changed files: "
@@ -23,7 +23,7 @@ shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../pr-shellcheck.txt
 
 echo "test:"
 ls
-cat ./script.sh
+cat "${list_of_changed_scripts[@]}"
 
 cat ../pr-shellcheck.txt
 
