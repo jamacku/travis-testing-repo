@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ./functions.sh
+. ./ci/functions.sh
 
 tree .
 
