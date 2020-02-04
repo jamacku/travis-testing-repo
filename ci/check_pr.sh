@@ -20,18 +20,18 @@ done
 echo "changed files: "
 echo "${list_of_changed_scripts[@]}"
 
-shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../pr-shellcheck.txt
+shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../pr-br-shellcheck.err
 
-echo "test:"
-ls
-cat "${list_of_changed_scripts[@]}"
-cat ./script.sh
-
-cat ../pr-shellcheck.txt
+cat ../pr-br-shellcheck.err
 
 git checkout "$TRAVIS_BRANCH"
 
-shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../merbr-shellcheck.txt
+shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../dest-br-shellcheck.err
 
-cat ../merbr-shellcheck.txt
+cat ../dest-br-shellcheck.err
 
+csdiff --fixed "../dest-br-shellcheck.err" "../pr-br-shellcheck.err" > ../fixes.log
+csdiff --fixed "../pr-br-shellcheck.err" "../dest-br-shellcheck.err" > ../bugs.log
+
+csgrep ../fixes.log
+csgrep ../bugs.log
