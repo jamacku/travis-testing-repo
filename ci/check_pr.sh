@@ -15,7 +15,8 @@ cat ../pr-changes.txt
 readarray list_of_changes < ../pr-changes.txt
 list_of_changed_scripts=()
 for file in "${list_of_changes[@]}"; do
-  is_it_script "$file" && list_of_changed_scripts+=("./$file")
+  # https://stackoverflow.com/questions/19345872/how-to-remove-a-newline-from-a-string-in-bash
+  is_it_script "$file" && list_of_changed_scripts+=("./$file//[$'\t\r\n ']")
 done
 
 echo "changed files: "
@@ -25,7 +26,7 @@ shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../pr-shellcheck.txt
 
 echo "test:"
 ls
-cat "${list_of_changed_scripts}"
+cat "${list_of_changed_scripts[@]}"
 cat ./script.sh
 
 cat ../pr-shellcheck.txt
