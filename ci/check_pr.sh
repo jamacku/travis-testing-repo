@@ -26,3 +26,10 @@ shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../master-shellcheck.t
 git rev-parse --abbrev-ref HEAD
 
 cat ../master-shellcheck.txt
+
+git checkout $TRAVIS_BRANCH
+
+shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../branch-shellcheck.txt
+
+cat ../branch-shellcheck.txt
+
