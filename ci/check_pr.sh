@@ -21,6 +21,9 @@ echo "${list_of_changed_scripts[@]}"
 
 shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../pr-shellcheck.txt
 
+echo "test:"
+cat "${list_of_changed_scripts}"
+
 cat ../pr-shellcheck.txt
 
 git checkout "$TRAVIS_BRANCH"
