@@ -21,15 +21,15 @@ done
 echo "changed files: "
 echo "${list_of_changed_scripts[@]}"
 
-shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../master-shellcheck.txt
+shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../pr-shellcheck.txt
 
-git rev-parse --abbrev-ref HEAD
+cat ../pr-shellcheck.txt
+
+
+git checkout master
+
+shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../master-shellcheck.txt
 
 cat ../master-shellcheck.txt
 
-git checkout $TRAVIS_BRANCH
-
-shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../branch-shellcheck.txt
-
-cat ../branch-shellcheck.txt
 
