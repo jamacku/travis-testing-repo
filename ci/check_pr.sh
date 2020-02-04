@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x 
+
 . ./ci/functions.sh
 
 # https://medium.com/@joey_9999/how-to-only-lint-files-a-git-pull-request-modifies-3f02254ec5e0
@@ -33,5 +35,7 @@ cat ../dest-br-shellcheck.err
 csdiff --fixed "../dest-br-shellcheck.err" "../pr-br-shellcheck.err" > ../fixes.log
 csdiff --fixed "../pr-br-shellcheck.err" "../dest-br-shellcheck.err" > ../bugs.log
 
+echo "Fix:"
 csgrep ../fixes.log
+echo "Bug:"
 csgrep ../bugs.log
