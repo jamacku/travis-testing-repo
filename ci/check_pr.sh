@@ -2,13 +2,9 @@
 
 . ./ci/functions.sh
 
-tree .
-
-echo "$TRAVIS_BRANCH"
-
 # https://medium.com/@joey_9999/how-to-only-lint-files-a-git-pull-request-modifies-3f02254ec5e0
 # get names of files from PR (excluding deleted files)
-git diff --name-only --diff-filter=b $(git merge-base HEAD $TRAVIS_BRANCH) > ../pr-changes.txt
+git diff --name-only --diff-filter=b "$(git merge-base HEAD "$TRAVIS_BRANCH")" > ../pr-changes.txt
 
 echo "PR changes:"
 cat ../pr-changes.txt
@@ -29,11 +25,11 @@ cat ../pr-shellcheck.txt
 
 tree .
 
-git checkout master
+git checkout "$TRAVIS_BRANCH"
 
-shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../master-shellcheck.txt
+shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../merbr-shellcheck.txt
 
-cat ../master-shellcheck.txt
+cat ../merbr-shellcheck.txt
 
 tree .
 
