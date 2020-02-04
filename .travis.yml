@@ -18,4 +18,3 @@ install:
 
 script: 
   - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./ci/check_pr.sh; fi'
-#script: [[ $TRAVIS_PULL_REQUEST = "false" ]] && ./ci/check.sh

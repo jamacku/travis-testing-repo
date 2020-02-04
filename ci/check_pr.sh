@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x 
-
 . ./ci/functions.sh
 
 # https://medium.com/@joey_9999/how-to-only-lint-files-a-git-pull-request-modifies-3f02254ec5e0
@@ -22,11 +20,17 @@ done
 echo "changed files: "
 echo "${list_of_changed_scripts[@]}"
 
+# Shellcheck PR
+
 shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../pr-br-shellcheck.err
+
+# Shellcheck master
 
 git checkout "$TRAVIS_BRANCH"
 
 shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../dest-br-shellcheck.err
+
+# Validation
 
 exitstatus=0
 
