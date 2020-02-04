@@ -7,9 +7,9 @@ tree .
 echo ".."
 tree ../
 
-# https://stackoverflow.com/questions/41145041/list-files-modified-in-a-pull-request-within-travis
+# https://medium.com/@joey_9999/how-to-only-lint-files-a-git-pull-request-modifies-3f02254ec5e0
 # get names of files from PR (excluding deleted files)
-git diff --name-only --diff-filter=AM HEAD..."$TRAVIS_BRANCH" > ../pr-changes.txt
+git diff --name-only --diff-filter=b $(git merge-base HEAD $TRAVIS_BRANCH) > ../pr-changes
 
 echo "PR changes:"
 cat ../pr-changes.txt
