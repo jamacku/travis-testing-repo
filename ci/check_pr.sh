@@ -20,3 +20,9 @@ done
 
 echo "changed files: "
 echo "${list_of_changed_scripts[@]}"
+
+shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../master-shellcheck.txt
+
+git rev-parse --abbrev-ref HEAD
+
+cat ../master-shellcheck.txt
