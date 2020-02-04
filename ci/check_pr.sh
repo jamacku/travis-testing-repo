@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 . ./ci/functions.sh
 
 # https://medium.com/@joey_9999/how-to-only-lint-files-a-git-pull-request-modifies-3f02254ec5e0
