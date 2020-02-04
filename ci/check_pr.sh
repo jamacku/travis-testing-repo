@@ -24,7 +24,7 @@ shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../pr-shellcheck.txt
 echo "test:"
 ls
 cat "${list_of_changed_scripts}"
-cat ./scripts
+cat ./script.sh
 
 cat ../pr-shellcheck.txt
 
