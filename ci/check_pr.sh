@@ -24,18 +24,32 @@ echo "${list_of_changed_scripts[@]}"
 
 shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../pr-br-shellcheck.err
 
-cat ../pr-br-shellcheck.err
-
 git checkout "$TRAVIS_BRANCH"
 
 shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../dest-br-shellcheck.err
 
-cat ../dest-br-shellcheck.err
+exitstatus=0
 
 csdiff --fixed "../dest-br-shellcheck.err" "../pr-br-shellcheck.err" > ../fixes.log
-csdiff --fixed "../pr-br-shellcheck.err" "../dest-br-shellcheck.err" > ../bugs.log
+if [ "$(cat ../fixes.log | wc -l)" -ne 0 ]; then
+  echo "Fixed bugs since last version:" 
+  csgrep ../fixes.log
+  echo "------------"
+else
+  echo "No Fixes since last version!"
+  echo "------------"
+fi
 
-echo "Fix:"
-csgrep ../fixes.log
-echo "Bug:"
-csgrep ../bugs.log
+csdiff --fixed "../pr-br-shellcheck.err" "../dest-br-shellcheck.err" > ../bugs.log
+if [ "$(cat ../bugs.log | wc -l)" -ne 0 ]; then
+  echo "Added bugs since last version:" 
+  csgrep ../bugs.log
+  echo "------------"
+  exitstatus=1
+else
+  echo "No changes since last version!" 
+  echo "------------"
+  exitstatus=0
+fi
+
+return $exitstatus

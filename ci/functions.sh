@@ -9,3 +9,4 @@ is_it_script () {
   echo "${list_of_scripts[@]}" | grep --silent "$1" && return 0
 }
 
+
