@@ -1,2 +1,4 @@
 script.sh
 ci/check.sh
+test.sh
+test2.sh
