@@ -56,4 +56,4 @@ else
   exitstatus=0
 fi
 
-return $exitstatus
+exit $exitstatus
