@@ -26,6 +26,8 @@ shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../pr-br-shellcheck.er
 git checkout "$TRAVIS_BRANCH"
 shellcheck --format=gcc "${list_of_changed_scripts[@]}" > ../dest-br-shellcheck.err
 
+set -x
+
 # ------------ #
 #  VALIDATION  #
 # ------------ #
