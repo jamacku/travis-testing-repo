@@ -2,8 +2,5 @@
 echo "Hello world!"
 echo "Ciao!" asdf
 
-if [test -eq 0] then
-  echo "yo"
-end
+echo "yo"
 
-asdf "test"
