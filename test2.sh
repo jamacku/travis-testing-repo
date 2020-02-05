@@ -1,1 +1,2 @@
-echo "HI \n"
+echo "HI"
+
