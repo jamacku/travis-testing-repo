@@ -1,6 +1,8 @@
 #!/bin/bash
 echo "Hello world!"
-echo "Ciao!" asdf
+echo "Ciao!"
+
+echo "Aloha"
 
 echo "yo"
 
